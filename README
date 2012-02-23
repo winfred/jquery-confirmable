@@ -1,2 +1,36 @@
+Sure it's been done. This one is designed to be sexy, and jive with a framework like BackboneJS. (althought totally not dependent on one)
+
+Oh and it's modal/dialog agnostic.
+
+```javascript
+
+var DocumentRow = Backbone.View.extend({
+
+        tagName: "li",
+        
+        className: "document-row",
+
+        events: {
+            "click .icon":          "open",
+            "click .button.edit":   "openEditDialog",
+            "click .button.delete": "destroy"
+        },
+        
+        destroy: function(e){
+            $(e.target).confirmable({
+                object: this.model, 
+                action: 'destroy',
+                body: "Really destroy "+this.model.name+"?"
+            }, 'show');
+            
+        },
+        
+        render: function() {
+        ...
+        }
+});
+
+```
+
 Full docs/examples can be found at
 http://liberat.us/jquery-confirmable.html
