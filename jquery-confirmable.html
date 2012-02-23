@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" >
+    <head>
+        <meta charset="utf-8" />
+        <title>jQuery Confirmable Plugin</title>
+        <link href="stylesheets/bootstrap.css" rel="stylesheet" type="text/css" />
+        <link href="stylesheets/layout.css" rel="stylesheet" type="text/css" />
+        <link href="stylesheets/modal.css" rel="stylesheet" type="text/css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <script src="javascripts/jquery-confirmable.js" type="text/javascript"></script>
+        <script src="javascripts/bootstrap-modal.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <header>
+            <div class="container">
+            <h2>jQuery Confirmable</h2>
+            <span class="tagline">Are you sure you want to do that?</span>
+            </div>
+        </header>
+
+        <!-- panel with buttons -->
+        <div class="main ">
+            <h2>Tired of setting up confirmation loops?</h2>
+            <h4>Me too.</h4>
+            <br />
+            <div class="span9">
+                <div class="span4 pull-left">
+                <p>This little guy aims to extract the mundane action-confirmation process into a more universal plugin for jQuery.</p>
+                <p>There are a few ways to set up the loop, but I'd like to start by stating this was designed with twitter bootstrap and backboneJS in mind. They are in no way dependencies, just something I kept in mind while building.</p>
+                <p>Let the plugin know how to show and hide your confirmation window. (Modal/Dialog agnosticism)<br />
+                Use data-attributes to customize messages and actions, or define more universal/default messages and actions. There are a few public methods that can be used programmatically as well. </p>
+                </div>
+                <div class="span4 pull-right">
+                <p style="padding-left: 10px">Inspect if you like.</p>
+                <div class="well">
+                    <a href="#" class="action btn">Do some risky default action.</a>
+                </div>    
+                <div class="well">            
+                    <a href="#" class="action btn btn-danger" data-action="thermonuclearWar" data-header="Are you sure?" data-body="Is this a game worth starting?" >Thermonuclear War</a>
+                </div>
+                <div class="well">
+                <a href="#" data-action="doThat" data-header="Rilly billy?" data-body="Are you sure you want to perform [unique action]?" class="action btn btn-success">This button has a unique message.</a>
+                </div>
+                </div>
+            </div> <!--close span8-->
+            <hr />
+            <h3 style="padding: 20px">Less chat more splat.</h3>
+            <div class="span9">
+            <p>It all begins with some sophisticated JS object, not unlike a backboneJS model.</p>
+            <pre>
+        var an_object = function() {
+            console.log("I encapsulated your mom last night.")
+        };
+        an_object.prototype = {
+            doThat: function() {
+                alert("That has been done.");
+            },
+            riskyBusiness: function(){
+                alert("Risky business complete.");   
+            },
+            thermonuclearWar: function(){
+                alert("The only winning move is not to play.");   
+            }
+        };
+            </pre>
+            <p>Then set up the plugin's default behavior somewhere universal, such as $(document).ready().</p>
+            <pre>
+        $.confirmableDefaults({
+            /* Object-specifc defaults are optional, if taken care of at some point later in the loop */
+            object: new an_object(),
+            action: "riskyBusiness",
+            /* Only show and hide are absolutely mandatory defaults */
+            /* How else would the plugin know what you'd like to use for a dialog/modal? */
+            show: function() {
+                $('.modal').modal('show'); //for bootstrappers
+                //or even this
+                //$('#myDialog').show();
+            },
+            hide: function() {
+                $('.modal').modal('hide');
+                //$('#myDialog').hide();
+            }
+        });
+            </pre>
+            <p>Then, have your modal use these class names if wanting to use button data-attribute default overrides. The confirmable-[content]'s innerHTML is remembered as a default automatically.</p>
+            <pre>
+            &lt;div style=&quot;display: none;&quot; class=&quot;confirmable-modal&quot;&gt;
+            &lt;div&gt;
+              &lt;h3 class=&quot;confirmable-header&quot;&gt;This is a default header..&lt;/h3&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;confirmable-body&quot;&gt;
+              &lt;p&gt;This is a default message body.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div &gt;
+              &lt;a class=&quot;confirmable-confirmation&quot;  href=&quot;#&quot;&gt;DO EET!&lt;/a&gt;
+              &lt;a class=&quot;confirmable-cancellation&quot; href=&quot;#&quot;&gt;Get me outta here.&lt;/a&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            </pre>
+            <p>Then tell the buttons to perform actions on that cool object. Data-attribute options will override $.confirmableDefaults().</p>
+            <pre>
+    &lt;a href=&quot;#&quot; class=&quot;action&quot;&gt;Do some risky default action.&lt;/a&gt;
+            
+    &lt;a href=&quot;#&quot; class=&quot;action&quot; data-action=&quot;thermonuclearWar&quot; data-header=&quot;Are you sure?&quot; data-body=&quot;Is this a game worth starting?&quot; &gt;Thermonuclear War&lt;/a&gt;
+            
+    &lt;a href=&quot;#&quot; class=&quot;action&quot; data-action=&quot;doThat&quot; data-header=&quot;Rilly billy?&quot; data-body=&quot;Are you sure you want to perform [unique action]?&quot; &gt;This button has a unique message.&lt;/a&gt;
+            </pre>
+            <p>and finally, init</p>
+            <pre>$('.actions').confirmable();</pre>
+            </div>
+        
+        <div class="span9">
+        <h2>Backbone/Programmatic Example</h2>
+        <h4>for those needing to generate confirmable actions on the fly.</h4>
+        <pre>
+var DocumentRow = Backbone.View.extend({
+
+        tagName: "li",
+        
+        className: "document-row",
+
+        events: {
+            "click .icon":          "open",
+            "click .button.edit":   "openEditDialog",
+            "click .button.delete": "destroy"
+        },
+        
+        destroy: function(e){
+            $(e.target).confirmable({
+                object: this.model, 
+                action: 'destroy',
+                body: "Really destroy "+this.model.name+"?"
+            }, 'show');
+            
+        },
+        
+        render: function() {
+        ...
+        }
+});
+        </pre>
+    <p>confirmable accepts three public methods as an optional first or second argument.<p>
+    <pre>
+        $('.action').confirmable('show');
+        $('.action').confirmable({body: "ARE YOU SERIOUS?!"}, 'show'); //try it in the console
+        $('.action').confirmable('hide');
+        $('.action').confirmable('confirm'); //skip the dialog and just confirm, might be helpful
+    </pre>
+    <div class="span9">
+    <h3>Order of Options Override Preference</h3>
+    <p>From highest preference to lowest preference.</p>
+    <ol><li>direct call through $('.action').confirmable(options,'show');</li><li>data-attribute="option"</li><li>$.confirmableDefaults(options)</li></ol>
+    <hr />
+    <h3>That's all folks.</h3>
+    <p>Fork it on <a href="http://github.com/wnadeau/jquery-confirmable" target="_blank">Github</a></p>
+    </div>
+        </div>
+    </div>
+        <footer><p>Made by <a href="http://liberat.us">Winfred</a></p><footer>
+
+
+        
+        <div style="display: none;" class="modal hide fade in confirmable-modal">
+            <div class="modal-header">
+              <h3 class="confirmable-header">This is a default header.</h3>
+            </div>
+            <div class="modal-body confirmable-body">
+              <p>This is a default message.</p>
+            </div>
+            <div class="modal-footer">
+              <a class="btn primary confirmable-confirmation"  href="#">DO EET!</a>
+              <a class="btn secondary confirmable-cancellation" href="#">Get me outta here.</a>
+            </div>
+          </div>
+        <script>
+        var an_object = function() {
+                console.log("I encapsulated your mom last night.")
+            };
+        an_object.prototype = {
+            doThat: function() {
+                alert("That has been done.");
+            },
+            riskyBusiness: function(){
+                alert("Risky business complete.");   
+            },
+            thermonuclearWar: function(){
+                alert("The only winning move is not to play.");   
+            }
+        };
+        $.confirmableDefaults({
+            object: new an_object(),
+            action: "riskyBusiness",
+            show: function() {
+                $('.modal').modal('show');
+            },
+            hide: function() {
+                $('.modal').modal('hide');
+            }
+        });
+        
+        $('.action').confirmable();  
+        </script>
+
+
+    </body>
+</html>
