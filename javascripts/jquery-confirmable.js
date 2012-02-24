@@ -46,7 +46,7 @@
         };
 
     var bindActionData = function(button, options) {
-            var o = $.extend({}, $.fn.confirmable.defaults, options, button.data());
+            var o = $.extend({}, $.fn.confirmable.defaults, button.data(), options);
             button.data('confirmable', o);
             button.click(function() {
                 $.fn.confirmable.show(button);
