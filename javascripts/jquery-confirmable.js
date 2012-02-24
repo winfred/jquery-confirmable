@@ -27,6 +27,7 @@
     $.fn.confirmable.confirm = function() {
         var o = $('.confirmable-modal').data('confirmable');
         o.object[o.action]();
+        if(typeof o.callback == 'function')o.callback();
         $.fn.confirmable.hide();
         return false;
     };
