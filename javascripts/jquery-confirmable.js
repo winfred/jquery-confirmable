@@ -21,9 +21,7 @@
     
     /* Public-Private Methods */
     $.fn.confirmable.show = function(button) {
-        var o = $(button).data('confirmable');
-        updateModal(o);
-        o.show();
+        updateModal($(button).data('confirmable')).show();
     };
 
     $.fn.confirmable.confirm = function() {
@@ -70,5 +68,6 @@
 
             if (o.cancellation) $('.confirmable-cancellation').html(o.cancellation);
             else $('.confirmable-cancellation').html($('.confirmable-cancellation').data('confirmable'));
+            return o;
         }; 
 })(jQuery);
