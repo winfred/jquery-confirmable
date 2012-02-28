@@ -1,6 +1,7 @@
 (function($) { 
-
-    /* Public Methods */
+    /* 
+     * Public Methods
+     */
     $.fn.confirmable = function(options, command) {
         //Expose public API
         if (typeof options == "string") {
@@ -15,11 +16,19 @@
             if(command && typeof $.fn.confirmable[command] == 'function') $.fn.confirmable[command]($(this));
         }
     };
+    
     $.confirmableDefaults = function(options) {
         $.fn.confirmable.defaults = options;
     }; 
     
-    /* Public-Private Methods */
+    /* For those that don't wish to use any data-attribute markup for customizing modal copy */
+    $.confirmable = function(options,command){
+        $('body').confirmable(options,command);
+    };
+    
+    /* 
+     * Protected-ish Methods
+     */
     $.fn.confirmable.show = function(button) {
         updateModal($(button).data('confirmable')).show();
     };
@@ -36,7 +45,9 @@
         $('.confirmable-modal').data('confirmable').hide();
     };
 
-    /* Private Methods */
+    /* 
+     * Private Methods
+     */
     var storeDefaultContent = function() {
             $('.confirmable-header').data('confirmable', $('.confirmable-header').html());
             $('.confirmable-body').data('confirmable', $('.confirmable-body').html());
