@@ -44,7 +44,8 @@
                     <a href="#" class="action btn">Do some risky default action.</a>
                 </div>    
                 <div class="well">            
-                    <a href="#" class="action btn btn-danger" data-action="thermonuclearWar" data-header="Are you sure?" data-body="Is this a game worth starting?" >Thermonuclear War</a>
+										<a href="#" class="action btn btn-danger" data-action="thermonuclearWar" data-confirmation="Blow it up." 
+										data-header="Are you sure?" data-body="Is this a game worth starting?" >Thermonuclear War</a>
                 </div>
                 <div class="well">
                 <a href="#" data-action="doThat" data-header="Rilly billy?" data-body="Are you sure you want to perform [unique action]?" class="action btn btn-success">This button has a unique message.</a>
@@ -221,7 +222,7 @@ var DocumentRow = Backbone.View.extend({
     </tr><tr>
     <td>hide</td><td>Hides the confirmation window.</td>
     </tr><tr>
-    <td>confirm</td><td>Triggers the confirmation event (and data/action-callback if available).</p></td>
+    <td>confirm</td><td>Triggers the confirmation event (and data/action-callback if available).</td>
     </tr>
     </tbody>
     </table>
@@ -242,11 +243,11 @@ var DocumentRow = Backbone.View.extend({
     </tr><tr>
     <td>data-body</td><td>the .confirmable-body html.</td>
     </tr><tr>
-    <td>data-confirmation</td><td>the .confirmable-confirmation html.</p></td>
+    <td>data-confirmation</td><td>the .confirmable-confirmation html.</td>
     </tr><tr>
-    <td>data-cancellation</td><td>the .confirmable-cancellation html.</p></td>
+    <td>data-cancellation</td><td>the .confirmable-cancellation html.</td>
     </tr><tr>
-    <td>data-action</td><td>the action to be run on the provided object.</p></td>
+    <td>data-action</td><td>the action to be run on the provided object.</td>
     </tr>
     </tbody>
     </table>
@@ -257,7 +258,7 @@ var DocumentRow = Backbone.View.extend({
     <p>Content defaults can be defined in the HTML markup of .confirmable-modal. See <a href="#default-markup">here</a>.</p>
     <p>Object/Modal defaults can be defined in $.confirmableDefaults({});. See <a href="#confirmable-defaults">here</a>.</p>
     <p>This plugin must be told how to show and hide your modal. This is done <a href="#confirmable-defaults">in $.confirmableDefaults()</a> on page-load.</p>
-
+		</div>
     
     <hr />
     <div id="order-of-options">
@@ -285,7 +286,7 @@ var DocumentRow = Backbone.View.extend({
 </br />
     
     </div>
-        <footer><p>Made by <a href="http://liberat.us">Winfred</a> | Fork it on <a href="http://github.com/wnadeau/jquery-confirmable" target="_blank">Github</a></p><footer>
+        <footer><p>Made by <a href="http://liberat.us">Winfred</a> | Fork it on <a href="http://github.com/wnadeau/jquery-confirmable" target="_blank">Github</a></p></footer>
 
         <!-- Define the default markup and apply reference CSS classes -->
         
