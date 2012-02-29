@@ -200,7 +200,7 @@ var DocumentRow = Backbone.View.extend({
     </thead>
     <tbody>
     <tr>
-    <td>Any of the <a href="#data-attributes">Data-Attributes</a></td><td><p>Example: if options_hash = {body: "Here's a body",confirmation: "BLOW IT ALL UP"} is provided, these values will override all defaults. See <a href="#order-of-options">the order of option preference</a> for more.</p></td>
+    <td>Any of the <a href="#data-attributes">Data-Attributes</a></td><td><p>Example: if options_hash = {body: "Here's a body",confirmation: "BLOW IT ALL UP"} is provided, these values will override all defaults. See <a href="#order-of-options">the order of option precedence</a> for more.</p></td>
     </tr><tr>
     <td>object</td><td>The object on which action will run after confirmation.</td>
     </tr><tr>
@@ -262,8 +262,8 @@ var DocumentRow = Backbone.View.extend({
     
     <hr />
     <div id="order-of-options">
-    <h3>Order of Options Override Preference</h3>
-    <p>From highest preference to lowest preference.</p>
+    <h3>Order of Options Precedence</h3>
+    <p>From highest to lowest.</p>
     <ol>
     <li><a href="#function-parameters">options POJO</a> through $('.action').confirmable(options,'show');</li>
     <li><a href="#data-attributes">data-attribute="option"</a></li>
