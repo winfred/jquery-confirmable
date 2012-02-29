@@ -15,6 +15,7 @@
             });
             if(command && typeof $.fn.confirmable[command] == 'function') $.fn.confirmable[command]($(this));
         }
+        return this;
     };
     
     $.confirmableDefaults = function(options) {
